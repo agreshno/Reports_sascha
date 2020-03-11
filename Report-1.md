@@ -76,4 +76,12 @@ Sequence quality was good even before any procedure.
 
 One peak on this graph indicates that there was no contamination with RNA from other species.
 
-How was the quality of your reads? What problems did you detect? What did you do to improve them? What percentage of reads was removed? How much data do you have left?
+![n cont](https://github.com/agreshno/bioinf/blob/master/n%20content.png)
+
+N content was low which means that there was no gaps in the reads.
+
+![adapt cont](https://github.com/agreshno/bioinf/blob/master/adapt%20cont.png)
+
+Adapter content was low which means that all of the adapters were removed.
+
+The program Trimmomatic was used to trim/remove low quality reads, or reads that have adapter sequences in them. 
