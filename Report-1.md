@@ -62,11 +62,11 @@ srun fastq-dump --skip-technical --readids **--split-files** SRR4787052 | to cre
 
 ![basic_stat](https://github.com/agreshno/bioinf/blob/master/basic_stat.png)
 
-Total number of reads was 63052537 & length of reads varied from 35 to 101 bp. The insert size (provided by the authors) was 200 bps. 
+The total number of reads was 63052537 & length of reads varied from 35 to 101 bp. The insert size (provided by the authors) was 200 bps. 
 
 ### 2. Reads quality and filtering
 
-Assessment of the quality of the reads was performed was a diagnostic tool FastQC. [fastqc_test.sh](https://github.com/agreshno/bioinf/blob/master/fastqc_test.sh) script was created to perform the analysis.
+Assessment of the quality of the reads was performed with a diagnostic tool FastQC. [fastqc_test.sh](https://github.com/agreshno/bioinf/blob/master/fastqc_test.sh) script was created to perform the analysis.
 
 ![seq qual](https://github.com/agreshno/bioinf/blob/master/seq_qual.png)
 
@@ -74,17 +74,17 @@ Sequence quality was good even before any procedure.
 
 ![per seq gc](https://github.com/agreshno/bioinf/blob/master/per_seq_gc.png)
 
-One peak on this graph indicates that there was no contamination with RNA from other species.
+Only one peak on this graph indicates that there was no contamination with RNA from other species.
 
 ![n cont](https://github.com/agreshno/bioinf/blob/master/n%20content.png)
 
-N content was low which means that there was no gaps in the reads.
+N content was low which means that there were no gaps in the reads.
 
 ![adapt cont](https://github.com/agreshno/bioinf/blob/master/adapt%20cont.png)
 
 Adapter content was low which means that all of the adapters were removed.
 
-The program Trimmomatic was used to trim/remove low quality reads, or reads that have adapter sequences in them. 
+The program Trimmomatic was used to trim/remove low quality reads or reads that have adapter sequences in them. 
 
 [clean_reads.sh](https://github.com/agreshno/bioinf/blob/master/clean_reads.sh) script was used with the following commands:
 
@@ -113,7 +113,7 @@ Quality of the reads became better after Trimmomatic.
 
 ### 3. Transcriptome assembly
 
-The program SOAPdenovo-trans was used to assemble the transcriptome. Two use this program two files were created:
+The program SOAPdenovo-trans was used to assemble the transcriptome. To use this program two files were created:
 1. [soapconfig.txt](https://github.com/agreshno/bioinf/blob/master/soapconfig.txt) - a configuration file that contains the information for SOAPdenovo-trans about the sequencing libraries
 2. [SOAPdenovo-trans.sh](https://github.com/agreshno/bioinf/blob/master/SOAPdenovo-trans.sh) - a SLURM script
 
@@ -123,8 +123,6 @@ module load SOAPdenovoTrans | to download SOAPdenovo-trans program
 srun SOAPdenovo-Trans-31mer all -s soapconfig.txt -K 31 -o TranscriptAssembly -p 16 1> TranscriptAssembly.stdout 2> TranscriptAssembly.stderr | to assemble transcriptome
 
 ## Part II: Comparison of the quality of the different assemblies
-
-### 1. Quality of the assembly
 
 **Blast results**
 
@@ -171,15 +169,15 @@ Then to decompress this archive the following command was used:
 
 **tar -zxvf eukaryota_odb9.tar.gz**
 
-Th run BUSCO analysis the script [BUSCO_analysis.sh](https://github.com/agreshno/bioinf/blob/master/BUSCO_analysis.sh) was created.
+To run BUSCO analysis the script [BUSCO_analysis.sh](https://github.com/agreshno/bioinf/blob/master/BUSCO_analysis.sh) was created.
 
-With BUSCO we can also compare the results from different assembly. To do that all the results (from different groups) were copied to a folder **plotfolder** with the following commands:
+With BUSCO we can also compare the results from different assemblies. To do that all the results (from different groups) were copied to a folder **plotfolder** with the following commands:
 
 **cd plotfolder**
 
 **cp /nfs/scistore03/vicosgrp/Bioinformatics_2020/*/*/short_summary_* .**
 
-To run the figure-drawing script of BUSCO the following command were used:
+To run the figure-drawing script of BUSCO the following commands were used:
 
 **module load R**
 
@@ -193,4 +191,4 @@ The final plot:
 
 ![busco_plot](https://github.com/agreshno/bioinf/blob/master/busco_plot.png)
 
-Most of the genes were found in our assembly. In general, we can say that quality of transcriptome assembly is much better than quality of genome assembly.
+Most of the genes were found in our assembly. In general, we can say that the quality of transcriptome assembly is much better than the quality of genome assembly.
