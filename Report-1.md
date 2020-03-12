@@ -144,6 +144,21 @@ The same for the scaffold scaffold1 Locus_3_0  3.5:
 
 These three examples indicate that there was no contamination in the sample.
 
+**Assembly stats**
+
+To assess the most common statistics for quality check of transcriptome assembly the programm **assembly-stats** was used. A SLURM script [stat.sh](https://github.com/agreshno/bioinf/blob/master/stat.sh) was used.
+
+We received the following results for our assembly:
+
+Characteristic | Value
+-|-
+The total number of assembled base-pairs | 618668372
+The total number of scaffold | 1585548
+The largest scaffold | 35840
+N50 | 653
+
+The percentage of Ns is less than 1% which indicates good quality of the assembly (no gaps). Assembly statistics suggest continuous assembly (N50 is big enough).
+
 **BUSCO analysis**
 
 We used BUSCO program to check the quality of our assembly; in a good assembly the set of conserved genes for all eukaryotes should be found.
@@ -158,19 +173,22 @@ Then to decompress this archive the following command was used:
 
 Th run BUSCO analysis the script [BUSCO_analysis.sh](https://github.com/agreshno/bioinf/blob/master/BUSCO_analysis.sh) was created.
 
-To assess the most common statistics for quality check of transcriptome assembly the programm **assembly-stats** was used. A SLURM script [stat.sh](https://github.com/agreshno/bioinf/blob/master/stat.sh) was used.
+With BUSCO we can also compare the results from different assembly. To do that all the results (from different groups) were copied to a folder **plotfolder** with the following commands:
 
-We received the following results for our assembly:
+**cd plotfolder**
 
-Characteristic | Value
--|-
-The total number of assembled base-pairs | 618668372
-The total number of scaffold | 1585548
-The largest scaffold | 35840
-N50 | 653
+**cp /nfs/scistore03/vicosgrp/Bioinformatics_2020/*/*/short_summary_* .**
 
-The percentage of Ns is less than 1% which indicates good quality of the assembly (no gaps). Assembly statistics suggest continuous assembly (N50 is big enough)
+To run the figure-drawing script of BUSCO the following command were used:
 
-2. Comparison of the different assemblies
+**module load R**
 
-Put the comparison table and final BUSCO figure in the report. Based on those, discuss how different they are and why you think that might be. How would this influence your strategy if you were starting a genome project for a species with a very large genome?
+**module load busco**
+
+**generate_plot.py -wd /nfs/scistore03/vicosgrp/Bioinformatics_2019/SASCHA_module1/plotfolder**
+
+**Rscript /nfs/scistore03/vicosgrp/Bioinformatics_2019/SASCHA_module1/plotfolder/busco_figure.R**
+
+The final plot:
+
+[busco_plot](https://github.com/agreshno/bioinf/blob/master/busco_figure.png)
