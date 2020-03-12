@@ -85,3 +85,30 @@ N content was low which means that there was no gaps in the reads.
 Adapter content was low which means that all of the adapters were removed.
 
 The program Trimmomatic was used to trim/remove low quality reads, or reads that have adapter sequences in them. 
+
+[clean_reads.sh](https://github.com/agreshno/bioinf/blob/master/clean_reads.sh) script was used with the following commands:
+
+Command | Meaning
+-|-
+module load java | download java module
+java -jar | to install java
+trimmomatic-0.36.jar | the actual java program
+ILLUMINACLIP:TruSeq3-PE.fa:2:30:10 | to remove adaptor sequences used by Illumina
+LEADING:3 | to remove bad quality base-pairs at the beginning of the read
+TRAILING:3 | to remove low quality base-pairs at the end of the read
+SLIDINGWINDOW:4:15 | to run a sliding window through the read and remove sequences of low-quality base-pairs in the middle of the read
+MINLEN:36 | to dump all reads that are smaller than 36 base-pairs after the trimming procedure
+
+These are the most common parameters for RNA-Seq data. 
+
+### 3. Transcriptome assembly
+
+The program SOAPdenovo-trans was used to assemble the transcriptome. Two use this program two files were created:
+1. [soapconfig.txt](https://github.com/agreshno/bioinf/blob/master/soapconfig.txt) - a configuration file that contains the information for SOAPdenovo-trans about the sequencing libraries
+2. [SOAPdenovo-trans.sh](https://github.com/agreshno/bioinf/blob/master/SOAPdenovo-trans.sh) - a SLURM script
+
+Command | Meaning
+-|-
+module load SOAPdenovoTrans | to download SOAPdenovo-trans program
+srun SOAPdenovo-Trans-31mer all -s soapconfig.txt -K 31 -o TranscriptAssembly -p 16 1> TranscriptAssembly.stdout 2> TranscriptAssembly.stderr | to assemble transcriptome
+
