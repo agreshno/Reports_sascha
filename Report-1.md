@@ -191,4 +191,6 @@ To run the figure-drawing script of BUSCO the following command were used:
 
 The final plot:
 
-[busco_plot](https://github.com/agreshno/bioinf/blob/master/busco_figure.png)
+![busco_plot](https://github.com/agreshno/bioinf/blob/master/busco_plot.png)
+
+Most of the genes were found in our assembly. In general, we can say that quality of transcriptome assembly is much better than quality of genome assembly.
