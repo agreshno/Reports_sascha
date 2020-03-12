@@ -101,6 +101,16 @@ MINLEN:36 | to dump all reads that are smaller than 36 base-pairs after the trim
 
 These are the most common parameters for RNA-Seq data. 
 
+Basic statistics after Trimmomatic:
+
+![basic_sat_trim](https://github.com/agreshno/bioinf/blob/master/basic_stat_trim.png)
+
+Sequence quality after Trimmomatic:
+
+![seq_qual_trim](https://github.com/agreshno/bioinf/blob/master/seq_qual_trim.png)
+
+Quality of the reads became better after Trimmomatic.
+
 ### 3. Transcriptome assembly
 
 The program SOAPdenovo-trans was used to assemble the transcriptome. Two use this program two files were created:
@@ -112,3 +122,55 @@ Command | Meaning
 module load SOAPdenovoTrans | to download SOAPdenovo-trans program
 srun SOAPdenovo-Trans-31mer all -s soapconfig.txt -K 31 -o TranscriptAssembly -p 16 1> TranscriptAssembly.stdout 2> TranscriptAssembly.stderr | to assemble transcriptome
 
+## Part II: Comparison of the quality of the different assemblies
+
+### 1. Quality of the assembly
+
+**Blast results**
+
+For scaffold4 Locus_8_1 17.5 Blast result was:
+
+![blas_res](https://github.com/agreshno/bioinf/blob/master/blast_res.png)
+
+As we can see from this table there was no contamination; this RNA belongs to Homo Sapiens species.
+
+For scaffold3 Locus_8_0 25.7 the best score again belongs to a sample Homo Sapiens:
+
+![blast_res_2](https://github.com/agreshno/bioinf/blob/master/blast_res2.png)
+
+The same for the scaffold scaffold1 Locus_3_0  3.5:
+
+![blast_res_3](https://github.com/agreshno/bioinf/blob/master/blast_res3.png)
+
+These three examples indicate that there was no contamination in the sample.
+
+**BUSCO analysis**
+
+We used BUSCO program to check the quality of our assembly; in a good assembly the set of conserved genes for all eukaryotes should be found.
+
+First, we downloaded the set of conserved genes for all eukaryotes from the BUSCO website with the following command:
+
+**wget http://busco.ezlab.org/v2/datasets/eukaryota_odb9.tar.gz**
+
+Then to decompress this archive the following command was used:
+
+**tar -zxvf eukaryota_odb9.tar.gz**
+
+Th run BUSCO analysis the script [BUSCO_analysis.sh](https://github.com/agreshno/bioinf/blob/master/BUSCO_analysis.sh) was created.
+
+To assess the most common statistics for quality check of transcriptome assembly the programm **assembly-stats** was used. A SLURM script [stat.sh](https://github.com/agreshno/bioinf/blob/master/stat.sh) was used.
+
+We received the following results for our assembly:
+
+Characteristic | Value
+-|-
+The total number of assembled base-pairs | 618668372
+The total number of scaffold | 1585548
+The largest scaffold | 35840
+N50 | 653
+
+The percentage of Ns is less than 1% which indicates good quality of the assembly (no gaps). Assembly statistics suggest continuous assembly (N50 is big enough)
+
+2. Comparison of the different assemblies
+
+Put the comparison table and final BUSCO figure in the report. Based on those, discuss how different they are and why you think that might be. How would this influence your strategy if you were starting a genome project for a species with a very large genome?
